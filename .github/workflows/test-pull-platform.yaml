@@ -1,0 +1,64 @@
+name: Test Pull Platform
+on: 
+  push:
+
+env:
+  TEST_PLUGIN_NS: '@solo.io'
+  TEST_PLUGIN_NAME: 'platform-portal-backstage-plugin-backend'
+  TEST_PLUGIN_REPO: 'solo-io/platform-portal-backstage-plugin-backend'
+  TEST_PLUGIN_REPO_REF: '90463fe991ab23ce59b1573f3417e9532292f753'
+  TEST_PLUGIN_LOCAL_DIR:  pluginsrc
+  TEST_PLUGIN_TYPE: backend-plugin
+
+jobs:
+  test-pull-platform:
+    runs-on: ubuntu-latest
+    steps:
+      - name: install os deps
+        run: |
+          sudo apt install g++ -y
+      - name: pull relevant platform
+        id: pull-platform
+        uses: komish/dh-plugin-workflow-hackery/.github/actions/pull-platform@main
+        with:
+          token: ${{ github.token }}
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: 'platform/.nvmrc'
+      - name: install platform deps
+        working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}
+        run: |
+          yarn install \
+            --frozen-lockfile
+      - name: pull plugin repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.TEST_PLUGIN_REPO }}
+          ref: ${{ env.TEST_PLUGIN_REPO_REF }}
+          path: ${{ env.TEST_PLUGIN_LOCAL_DIR }}
+      - name: copy plugin content to platform
+        run: |
+          cp -Rav ${{ env.TEST_PLUGIN_LOCAL_DIR }}/plugins/${{ env.TEST_PLUGIN_NAME }} ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/
+      - name: Test plugin dep install
+        working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}
+        run: |
+          yarn workspace ${{ env.TEST_PLUGIN_NS }}/${{ env.TEST_PLUGIN_NAME }} \
+            install \
+            --frozen-lockfile \
+            --production
+      - name: export dynamic plugin
+        working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}
+        run: |
+          npx janus-cli package export-dynamic-plugin
+      - name: publish dynamic plugin
+        working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}/dist-dynamic
+        run: |
+          echo '@komish:registry=https://npm.pkg.github.com' > .npmrc
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+
+

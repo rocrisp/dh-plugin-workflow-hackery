@@ -1,4 +1,4 @@
 platform:
   org: janus-idp
-  repo: backstage-showcase
-  ref: 1bc043eb3325bdb10965292574f58b98706117d7
+  repo: backstage-plugins
+  ref: ee8cc1dad2f10d698b8fb7e19ef0f9abe3b6c6c7

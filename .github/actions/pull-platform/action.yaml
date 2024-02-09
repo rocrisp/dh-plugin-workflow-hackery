@@ -1,0 +1,61 @@
+name: Pull Platform
+description: Pulls the platform content. Cleans out all plugins.
+inputs:
+  token:
+    default: ${{ github.token }}
+    required: false
+    description: |
+      Token to use for pulling the platform bits.
+      This is not used for pulling the repository-local bits.
+outputs:
+  platform-content-dir:
+    description: Where the content was written.
+    value: ${{ steps.populate-path.outputs.platform-content-dir }}
+  platform-org:
+    description: the organization containing platform bits
+    value: ${{ steps.read-platform-meta.outputs.platform-org }}
+  platform-repo:
+    description: the repo containing platform bits
+    value: ${{ steps.read-platform-meta.outputs.platform-repo }}
+  platform-ref:
+    description: the ref for the bits that were pulled
+    value: ${{ steps.read-platform-meta.outputs.platform-ref }}
+runs:
+  using: composite
+  steps:
+  - name: set vars
+    id: vars
+    shell: bash
+    run: |
+      echo platform-dir=platform | tee -a $GITHUB_OUTPUT
+  - name: pull our repo to grab configuration
+    uses: actions/checkout@v4
+    with:
+      path: ${{ github.run_id }}
+  - name: parse repo configuration
+    id: read-platform-meta
+    working-directory: ${{ github.run_id }}
+    shell: bash
+    run: |
+      set -eo pipefail
+      echo platform-org=$(yq .platform.org config.yaml) | tee -a $GITHUB_OUTPUT
+      echo platform-repo=$(yq .platform.repo config.yaml) | tee -a $GITHUB_OUTPUT
+      echo platform-ref=$(yq .platform.ref config.yaml) | tee -a $GITHUB_OUTPUT
+  - name: pull platform
+    uses: actions/checkout@v4
+    with:
+      repository: ${{ steps.read-platform-meta.outputs.platform-org }}/${{ steps.read-platform-meta.outputs.platform-repo }}
+      ref: ${{ steps.read-platform-meta.outputs.platform-ref }}
+      token: ${{ inputs.token }}
+      path: ${{ steps.vars.outputs.platform-dir }}
+  - name: remove platform plugins
+    working-directory: ${{ steps.vars.outputs.platform-dir }}
+    shell: bash
+    run: |
+      rm -vrf plugins/*
+  - name: populate path
+    id: populate-path
+    shell: bash
+    run: |
+      echo platform-content-dir=$(realpath ${{ steps.vars.outputs.platform-dir }}) | tee -a $GITHUB_OUTPUT
+    
