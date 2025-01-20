@@ -1,6 +1,7 @@
 name: Test Pull Platform
 on: 
   push:
+  workflow_dispatch:
 
 env:
   TEST_PLUGIN_NS: '@solo.io'
