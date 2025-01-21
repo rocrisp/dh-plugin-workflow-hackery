@@ -24,9 +24,10 @@ jobs:
         with:
           token: ${{ github.token }}
       - name: setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version-file: 'platform/.nvmrc'
+          node-version: '20'
       - name: install platform deps
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}
         run: |
@@ -57,8 +58,9 @@ jobs:
         run: |
           echo '@rocrisp:registry=https://npm.pkg.github.com' > .npmrc
           npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          registry: "https://npm.pkg.github.com"
       - name: Upload npm logs
         if: failure() # only upload logs if the previous step failed
         uses: actions/upload-artifact@v4
