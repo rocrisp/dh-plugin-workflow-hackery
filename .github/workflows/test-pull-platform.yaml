@@ -59,7 +59,12 @@ jobs:
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
+      - name: Upload npm logs
+        if: failure() # only upload logs if the previous step failed
+        uses: actions/upload-artifact@v2
+        with:
+          name: npm-debug-logs
+          path: /home/runner/.npm/_logs
 
 
 
