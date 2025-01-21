@@ -55,10 +55,10 @@ jobs:
       - name: publish dynamic plugin
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}/dist-dynamic
         run: |
-          echo '@komish:registry=https://npm.pkg.github.com' > .npmrc
+          echo '@rocrisp:registry=https://npm.pkg.github.com' > .npmrc
           npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 
 
