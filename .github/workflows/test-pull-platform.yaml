@@ -20,7 +20,7 @@ jobs:
           sudo apt install g++ -y
       - name: pull relevant platform
         id: pull-platform
-        uses: komish/dh-plugin-workflow-hackery/.github/actions/pull-platform@main
+        uses: rocrisp/dh-plugin-workflow-hackery/.github/actions/pull-platform@main
         with:
           token: ${{ github.token }}
       - name: setup node
