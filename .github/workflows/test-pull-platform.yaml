@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  TEST_PLUGIN_NS: '@rhdhcertification'
+  TEST_PLUGIN_NS: '@solo.io'
   TEST_PLUGIN_NAME: 'platform-portal-backstage-plugin-backend'
   TEST_PLUGIN_REPO: 'solo-io/platform-portal-backstage-plugin-backend'
   TEST_PLUGIN_REPO_REF: '90463fe991ab23ce59b1573f3417e9532292f753'
@@ -29,7 +29,7 @@ jobs:
           node-version-file: 'platform/.nvmrc'
           node-version: '18'
           registry-url: 'https://registry.npmjs.org'
-          scope: '@rocrisp'
+          scope: '@rhdhuser'
       - name: install platform deps
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}
         run: |
