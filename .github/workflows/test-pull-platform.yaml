@@ -28,8 +28,8 @@ jobs:
         with:
           node-version-file: 'platform/.nvmrc'
           node-version: '18'
-          registry-url: 'https://registry.npmjs.org'
-          scope: '@rhdhuser'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@rocrisp'
       - name: install platform deps
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}
         run: |
