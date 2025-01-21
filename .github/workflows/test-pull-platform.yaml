@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  TEST_PLUGIN_NS: '@solo.io'
+  TEST_PLUGIN_NS: '@rhdhcertification'
   TEST_PLUGIN_NAME: 'platform-portal-backstage-plugin-backend'
   TEST_PLUGIN_REPO: 'solo-io/platform-portal-backstage-plugin-backend'
   TEST_PLUGIN_REPO_REF: '90463fe991ab23ce59b1573f3417e9532292f753'
