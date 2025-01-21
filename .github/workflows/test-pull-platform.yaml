@@ -28,7 +28,6 @@ jobs:
         with:
           registry-url: 'https://registry.npmjs.org/'
           node-version-file: 'platform/.nvmrc'
-          cache: 'npm'
       - name: install platform deps
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}
         run: |
