@@ -27,7 +27,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: 'platform/.nvmrc'
-          #node-version: '18'
+          node-version: '18'
           registry-url: 'https://npm.pkg.github.com'
           scope: "@rocrisp"
       - name: install platform deps
@@ -63,11 +63,11 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.GH_TOKEN}}
       - name: Upload npm logs
-        if: failure() # only upload logs if the previous step failed
+        #if: failure() # only upload logs if the previous step failed
         uses: actions/upload-artifact@v4
         with:
           name: npm-debug-logs
-          path: /home/runner/.npm/_logs
+          path: /home/runner/work/*
 
 
 
