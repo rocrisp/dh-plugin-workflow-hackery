@@ -25,9 +25,13 @@ jobs:
       - name: List Podman Images
         run: podman images
 
+      # Step 3.1: Inspect Pulled Image
+      - name: Inspect Pulled Image
+        run: podman inspect quay.io/tkral/backstage-community-plugin-todo:v0.1.1
+
       # Step 4: Create Temporary Container
       - name: Create Temporary Container
-        run: podman create --name temp-container quay.io/tkral/backstage-community-plugin-todo:v0.1.1
+        run: podman create --name temp-container quay.io/tkral/backstage-community-plugin-todo:v0.1.1 bash
       
       # Step 5: Extract Files from Container
       - name: Extract Files from Container
