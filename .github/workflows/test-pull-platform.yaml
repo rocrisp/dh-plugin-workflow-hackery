@@ -27,7 +27,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: 'platform/.nvmrc'
-          node-version: '18'
+          #node-version: '18'
           registry-url: 'https://npm.pkg.github.com'
           scope: "@rocrisp"
       - name: install platform deps
@@ -58,7 +58,7 @@ jobs:
       - name: publish dynamic plugin
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}/dist-dynamic
         run: |
-          echo "registry=https://npm.pkg.github.com/@rocrisp" >> .npmrc
+          echo "@rocrisp:registry=https://npm.pkg.github.com" >> .npmrc
           npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GH_TOKEN}}
