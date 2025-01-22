@@ -62,6 +62,7 @@ jobs:
           echo "Before update: dist-dynamic/package.json:"
           cat dist-dynamic/package.json
           sed -i 's/"name": "@solo.io\//"name": "@rocrisp\//g' dist-dynamic/package.json
+          sed -i 's/"version": "0.0.5"/"version": "0.0.6"/' dist-dynamic/package.json
           echo "After update:"
           cat dist-dynamic/package.json
       - name: publish dynamic plugin
