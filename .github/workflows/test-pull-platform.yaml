@@ -58,6 +58,17 @@ jobs:
       - name: publish dynamic plugin
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}/dist-dynamic
         run: |
+          # Print the current working directory
+          echo "Working directory: $PWD"
+
+          # Rename the tarball to remove @solo.io
+          for file in *.tgz; do
+            echo "Original filename: $file"
+            new_file=$(echo "$file" | sed 's/@solo.io-//g')
+            mv "$file" "$new_file"
+            echo "Renamed file: $new_file"
+          done
+
           echo "registry=https://npm.pkg.github.com/@rocrisp" >> .npmrc
           npm publish --access public
         env:
@@ -67,7 +78,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: npm-debug-logs
-          path: /home/runner/work/*
+          path: /home/runner/work/_temp/_npm/_logs/*
 
 
 
