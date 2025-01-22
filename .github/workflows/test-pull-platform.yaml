@@ -29,7 +29,7 @@ jobs:
           node-version-file: 'platform/.nvmrc'
           node-version: '18'
           registry-url: 'https://npm.pkg.github.com'
-          scope: '@rocrisp'
+          scope: "@rocrisp"
       - name: install platform deps
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}
         run: |
@@ -58,10 +58,10 @@ jobs:
       - name: publish dynamic plugin
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}/dist-dynamic
         run: |
-          echo '@rocrisp:registry=https://npm.pkg.github.com' > .npmrc
+          echo "registry=https://npm.pkg.github.com/@rocrisp" >> .npmrc
           npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GH_TOKEN }}
+          NODE_AUTH_TOKEN: ${{secrets.GH_TOKEN}}
       - name: Upload npm logs
         if: failure() # only upload logs if the previous step failed
         uses: actions/upload-artifact@v4
