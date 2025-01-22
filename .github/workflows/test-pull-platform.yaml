@@ -75,7 +75,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: npm-debug-logs
-          path: /home/runner/work/_temp/_npm/_logs/*
+          path: /home/runner/.npm/_logs/*
 
 
 
