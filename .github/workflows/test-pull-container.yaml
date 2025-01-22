@@ -24,3 +24,19 @@ jobs:
       # Step 3: Verify Pulled Image
       - name: List Podman Images
         run: podman images
+
+      # Step 4: Create Temporary Container
+      - name: Create Temporary Container
+        run: podman create --name temp-container quay.io/tkral/backstage-community-plugin-todo:v0.1.1
+      
+      # Step 5: Extract Files from Container
+      - name: Extract Files from Container
+        run: podman cp temp-container:/app ./extracted-files
+      
+      # Step 6: Verify Extracted Files
+      - name: List Extracted Files
+        run: ls -al ./extracted-files
+      
+      # Step 7: Clean Up Temporary Container
+      - name: Clean Up Temporary Container
+        run: podman rm temp-container
