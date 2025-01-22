@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  TEST_PLUGIN_NS: '@rocrisp'
+  TEST_PLUGIN_NS: '@solo.io'
   TEST_PLUGIN_NAME: 'platform-portal-backstage-plugin-backend'
   TEST_PLUGIN_REPO: 'solo-io/platform-portal-backstage-plugin-backend'
   TEST_PLUGIN_REPO_REF: '90463fe991ab23ce59b1573f3417e9532292f753'
@@ -56,9 +56,13 @@ jobs:
         run: |
           npx janus-cli package export-dynamic-plugin
       - name: publish dynamic plugin
-        working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}/dist-dynamic
+        #working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}/dist-dynamic
+        working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}
         run: |
-          echo "registry=https://npm.pkg.github.com" >> .npmrc
+          #rename file
+          mv dist-dynamic/*.tgz dist-dynamic/rose.tgz
+
+          echo "registry=https://npm.pkg.github.com/rocrisp" >> .npmrc
           npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GH_TOKEN}}
