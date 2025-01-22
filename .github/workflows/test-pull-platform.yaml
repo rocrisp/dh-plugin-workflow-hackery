@@ -63,7 +63,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.GH_TOKEN}}
       - name: Upload npm logs
-        #if: failure() # only upload logs if the previous step failed
+        if: failure() # only upload logs if the previous step failed
         uses: actions/upload-artifact@v4
         with:
           name: npm-debug-logs
