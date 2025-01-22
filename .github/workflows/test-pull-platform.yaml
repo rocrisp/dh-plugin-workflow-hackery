@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  TEST_PLUGIN_NS: '@solo.io'
+  TEST_PLUGIN_NS: '@rocrisp'
   TEST_PLUGIN_NAME: 'platform-portal-backstage-plugin-backend'
   TEST_PLUGIN_REPO: 'solo-io/platform-portal-backstage-plugin-backend'
   TEST_PLUGIN_REPO_REF: '90463fe991ab23ce59b1573f3417e9532292f753'
@@ -58,18 +58,7 @@ jobs:
       - name: publish dynamic plugin
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}/dist-dynamic
         run: |
-          # Print the current working directory
-          echo "Working directory: $PWD"
-
-          # Rename the tarball to remove @solo.io
-          for file in *.tgz; do
-            echo "Original filename: $file"
-            new_file=$(echo "$file" | sed 's/@solo.io-//g')
-            mv "$file" "$new_file"
-            echo "Renamed file: $new_file"
-          done
-
-          echo "registry=https://npm.pkg.github.com/@rocrisp" >> .npmrc
+          echo "registry=https://npm.pkg.github.com" >> .npmrc
           npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GH_TOKEN}}
