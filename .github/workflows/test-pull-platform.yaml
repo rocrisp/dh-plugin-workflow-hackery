@@ -67,10 +67,10 @@ jobs:
       - name: Update package.json scope
         run: |
           echo "Before update:"
-          cat package.json
-          sed -i 's/"name": "@solo.io\//"name": "@rocrisp\//g' package.json
+          cat dist-dynamic/package.json
+          sed -i 's/"name": "@solo.io\//"name": "@rocrisp\//g' dist-dynamic/package.json
           echo "After update:"
-          cat package.json
+          cat dist-dynamic/package.json
       - name: publish dynamic plugin
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}/dist-dynamic
         #working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}
