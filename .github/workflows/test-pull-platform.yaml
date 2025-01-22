@@ -62,7 +62,7 @@ jobs:
           echo "Before update: dist-dynamic/package.json:"
           cat dist-dynamic/package.json
           sed -i 's/"name": "@solo.io\//"name": "@rocrisp\//g' dist-dynamic/package.json
-          sed -i 's/"version": "0.0.5"/"version": "0.0.3"/' dist-dynamic/package.json
+          sed -i 's/"version": "0.0.5"/"version": "0.0.1"/' dist-dynamic/package.json
           echo "After update:"
           cat dist-dynamic/package.json
       - name: publish dynamic plugin
@@ -70,12 +70,12 @@ jobs:
         #working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}
         run: |
           echo "@rocrisp:registry=https://npm.pkg.github.com" >> .npmrc
-          echo '//npm.pkg.github.com/:_authToken=${{ secrets.GH_TOKEN }}' >> .npmrc
+          echo '//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}' >> .npmrc
           echo "content of .npmrc:"
           cat .npmrc
           npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GH_TOKEN}}
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Upload npm logs
         if: failure() # only upload logs if the previous step failed
         uses: actions/upload-artifact@v4
