@@ -19,7 +19,7 @@ jobs:
 
       # Step 2: Pull the Container Image
       - name: Pull Container Image
-        run: podman pull quay.io/tkral/backstage-community-plugin-todo
+        run: podman pull quay.io/tkral/backstage-community-plugin-todo:v0.1.1
 
       # Step 3: Verify Pulled Image
       - name: List Podman Images
