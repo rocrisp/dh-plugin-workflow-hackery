@@ -55,18 +55,11 @@ jobs:
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}
         run: |
           npx janus-cli package export-dynamic-plugin
-      - name: List contents of dist-dynamic
+      - name: Update package.json scope
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}
         run: |
-          echo "Contents of dist-dynamic:"
-          #view content of dist-dynamic/package.json
-          echo "dist-dynamic/package.json:"
-          cat dist-dynamic/package.json
-          #list everything in dist-dynamics and subfolders
-          ls -al dist-dynamic/*
-      - name: Update package.json scope
-        run: |
-          echo "Before update:"
+          #content of dist-dynamic/package.json
+          echo "Before update: dist-dynamic/package.json:"
           cat dist-dynamic/package.json
           sed -i 's/"name": "@solo.io\//"name": "@rocrisp\//g' dist-dynamic/package.json
           echo "After update:"
