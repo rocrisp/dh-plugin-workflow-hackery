@@ -64,6 +64,13 @@ jobs:
           cat dist-dynamic/package.json
           #list everything in dist-dynamics and subfolders
           ls -al dist-dynamic/*
+      - name: Update package.json scope
+        run: |
+          echo "Before update:"
+          cat package.json
+          sed -i 's/"name": "@solo.io\//"name": "@rocrisp\//g' package.json
+          echo "After update:"
+          cat package.json
       - name: publish dynamic plugin
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}/dist-dynamic
         #working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}
