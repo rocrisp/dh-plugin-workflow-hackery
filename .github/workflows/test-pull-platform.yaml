@@ -62,13 +62,11 @@ jobs:
           #list everything in dist-dynamics and subfolders
           ls -al dist-dynamic/*
       - name: publish dynamic plugin
-        #working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}/dist-dynamic
-        working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}
+        working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}/dist-dynamic
+        #working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}
         run: |
-          #rename file
-          mv dist-dynamic/dist/*.tgz dist-dynamic/rose.tgz
-
           echo "registry=https://npm.pkg.github.com/rocrisp" >> .npmrc
+          cat .npmrc
           npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GH_TOKEN}}
