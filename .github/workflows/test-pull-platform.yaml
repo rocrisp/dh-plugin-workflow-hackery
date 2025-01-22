@@ -67,7 +67,6 @@ jobs:
           cat dist-dynamic/package.json
       - name: publish dynamic plugin
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}/dist-dynamic
-        #working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}
         run: |
           echo "@rocrisp:registry=https://npm.pkg.github.com" >> .npmrc
           echo '//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}' >> .npmrc
