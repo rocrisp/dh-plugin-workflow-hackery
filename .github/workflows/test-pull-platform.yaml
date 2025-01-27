@@ -12,49 +12,59 @@ env:
   TEST_PLUGIN_TYPE: backend-plugin
 
 jobs:
-  test-pull-platform:
+  build-and-publish:
+    name: Build and Publish RHDH Dynamic Plugin
     runs-on: ubuntu-latest
+    
     steps:
-      - name: install os deps
+      - name: Install OS deps
         run: |
           sudo apt install g++ -y
-      - name: pull relevant platform
+          
+      - name: Pull relevant platform
         id: pull-platform
         uses: rocrisp/dh-plugin-workflow-hackery/.github/actions/pull-platform@main
         with:
           token: ${{ github.token }}
-      - name: setup node
+      
+      - name: Set up Node.js Environment
         uses: actions/setup-node@v4
         with:
           node-version-file: 'platform/.nvmrc'
           node-version: '18'
           registry-url: 'https://npm.pkg.github.com'
           scope: "@rocrisp"
-      - name: install platform deps
+          
+      - name: Install Platform deps
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}
         run: |
           yarn install \
             --frozen-lockfile
-      - name: pull plugin repo
+            
+      - name: Pull Plugin from Repo
         uses: actions/checkout@v4
         with:
           repository: ${{ env.TEST_PLUGIN_REPO }}
           ref: ${{ env.TEST_PLUGIN_REPO_REF }}
           path: ${{ env.TEST_PLUGIN_LOCAL_DIR }}
-      - name: copy plugin content to platform
+          
+      - name: Copy Plugin Content to Platform
         run: |
           cp -Rav ${{ env.TEST_PLUGIN_LOCAL_DIR }}/plugins/${{ env.TEST_PLUGIN_NAME }} ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/
-      - name: Test plugin dep install
+      
+      - name: Test Plugin dep install
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}
         run: |
           yarn workspace ${{ env.TEST_PLUGIN_NS }}/${{ env.TEST_PLUGIN_NAME }} \
             install \
             --frozen-lockfile \
             --production
-      - name: export dynamic plugin
+            
+      - name: Export Dynamic Plugin
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}
         run: |
           npx janus-cli package export-dynamic-plugin
+          
       - name: Update package.json scope
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}
         run: |
@@ -62,10 +72,11 @@ jobs:
           echo "Before update: dist-dynamic/package.json:"
           cat dist-dynamic/package.json
           sed -i 's/"name": "@solo.io\//"name": "@rocrisp\//g' dist-dynamic/package.json
-          sed -i 's/"version": "0.0.5"/"version": "0.0.1"/' dist-dynamic/package.json
+          sed -i 's/"version": "0.0.5"/"version": "0.0.10"/' dist-dynamic/package.json
           echo "After update:"
           cat dist-dynamic/package.json
-      - name: publish dynamic plugin
+          
+      - name: Publish Dynamic Plugin
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/plugins/${{ env.TEST_PLUGIN_NAME }}/dist-dynamic
         run: |
           echo "@rocrisp:registry=https://npm.pkg.github.com" >> .npmrc
@@ -75,6 +86,7 @@ jobs:
           npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          
       - name: Upload npm logs
         if: failure() # only upload logs if the previous step failed
         uses: actions/upload-artifact@v4
