@@ -11,6 +11,8 @@ env:
   TEST_PLUGIN_REPO_REF: '90463fe991ab23ce59b1573f3417e9532292f753'
   TEST_PLUGIN_LOCAL_DIR:  pluginsrc
   TEST_PLUGIN_TYPE: backend-plugin
+  ACTIONS_STEP_DEBUG: true
+
 
 jobs:
   test-pull-platform:
@@ -37,6 +39,9 @@ jobs:
       #     args: run ${{ env.TEST_PLUGIN_IMG }}:v0.1.1 
       - name: get files
         run: ls
+      - name: Debug Kubeconfig
+        run: cat $KUBE_CONFIG
+      
       - name: test
         uses: actions-hub/kubectl@master
         env:
