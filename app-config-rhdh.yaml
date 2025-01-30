@@ -3,7 +3,7 @@ data:
   app-config-rhdh.yaml: |
     app:
       title: My Red Hat Developer Hub
-      baseUrl: https://redhat-developer-hub-danspace.apps.dancurran-lab2025.opdev.io/
+      baseUrl: https://redhat-developer-hub-rose.apps.dancurran-lab2025.opdev.io/
     integrations:
       github:
         - host: github.com
@@ -23,6 +23,6 @@ kind: ConfigMap
 metadata:
   annotations:
     kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"v1","data":{"app-config-rhdh.yaml":"app:\n  title: My Red Hat Developer Hub\n  baseUrl:https://redhat-developer-hub-danspace.apps.dancurran-lab2025.opdev.io/\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"app-config-rhdh","namespace":"danspace"}}
+      {"apiVersion":"v1","data":{"app-config-rhdh.yaml":"app:\n  title: My Red Hat Developer Hub\n  baseUrl:https://redhat-developer-hub-rose.apps.dancurran-lab2025.opdev.io/\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"app-config-rhdh","namespace":"danspace"}}
   name: app-config-rhdh
   namespace: rose
