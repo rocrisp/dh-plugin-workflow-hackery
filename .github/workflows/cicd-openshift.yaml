@@ -1,6 +1,6 @@
 name: Test Openshift CI/CD
 on: 
-  push:
+  # push:
   workflow_dispatch:
 
 env:

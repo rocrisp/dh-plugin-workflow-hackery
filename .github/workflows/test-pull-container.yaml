@@ -2,9 +2,9 @@ name: Pull Container Image Workflow
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
 
 jobs:
   pull-container:
