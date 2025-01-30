@@ -1,4 +1,4 @@
-name: Test Pull Platform
+name: Test Openshift CI/CD
 on: 
   push:
   workflow_dispatch:
