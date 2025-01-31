@@ -70,4 +70,4 @@ jobs:
           repository: 'dh-plugin-workflow-hackery'
 
       - name: run helm install
-        run: helm repo add openshift-helm-charts https://charts.openshift.io/; helm --kubeconfig /opt/.kube/config install redhat-developer-hub-actions -f dh-plugin-workflow-hackery/rhdh-helm-values.yaml openshift-helm-charts/redhat-developer-hub --namespace rose
+        run: helm repo add openshift-helm-charts https://charts.openshift.io/; helm --kubeconfig /opt/.kube/config install redhat-developer-hub -f dh-plugin-workflow-hackery/rhdh-helm-values.yaml openshift-helm-charts/redhat-developer-hub --namespace rose-test

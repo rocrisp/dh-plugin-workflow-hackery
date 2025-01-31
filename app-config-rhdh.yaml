@@ -1,28 +1,24 @@
 apiVersion: v1
 data:
-  app-config-rhdh.yaml: |
+  app-config.yaml: |
     app:
       title: My Red Hat Developer Hub
-      baseUrl: https://redhat-developer-hub-rose.apps.dancurran-lab2025.opdev.io/
+      baseUrl: http://redhat-developer-hub-actions-rose.apps.dancurran-lab2025.opdev.io/
     integrations:
       github:
         - host: github.com
           token: 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
     auth:
-      allowGuestAccess: true
-      environment: development
       providers:
+        guest:
+          dangerouslyAllowSignInWithoutUserInCatalog: true
         github:
-          development:
-            clientId: Ov23lixqTa9l9r1X9UzX
-            clientSecret: 6bb73cd505681044a08c2b32097de23ae30a59c2
-    dangerouslyAllowSignInWithoutUserInCatalog: true
-    enabled:
-      github: true
+          clientId: Ov23lixqTa9l9r1X9UzX
+          clientSecret: 6bb73cd505681044a08c2b32097de23ae30a59c2
 kind: ConfigMap
 metadata:
   annotations:
     kubectl.kubernetes.io/last-applied-configuration: |
       {"apiVersion":"v1","data":{"app-config-rhdh.yaml":"app:\n  title: My Red Hat Developer Hub\n  baseUrl:https://redhat-developer-hub-rose.apps.dancurran-lab2025.opdev.io/\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"app-config-rhdh","namespace":"danspace"}}
   name: app-config-rhdh
-  namespace: rose
+  namespace: rose-test
