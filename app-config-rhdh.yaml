@@ -12,9 +12,6 @@ data:
       providers:
         guest:
           dangerouslyAllowSignInWithoutUserInCatalog: true
-        github:
-          clientId: Ov23lixqTa9l9r1X9UzX
-          clientSecret: 6bb73cd505681044a08c2b32097de23ae30a59c2
 kind: ConfigMap
 metadata:
   annotations:
