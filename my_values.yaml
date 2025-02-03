@@ -5,8 +5,11 @@ global:
       enabled: true
   clusterRouterBase: apps.dancurran-lab2025.opdev.io
   dynamic:
+    plugins:
+      - disabled: false
+        package: oci://quay.io/tkral/backstage-community-plugin-todo:v0.1.1!backstage-community-plugin-todo
     includes:
-    - dynamic-plugins.default.yaml
+      - dynamic-plugins.default.yaml
 nameOverride: developer-hub
 route:
   enabled: true
