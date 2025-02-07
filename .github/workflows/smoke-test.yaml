@@ -17,19 +17,14 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Checkout respository
+        uses: actions/checkout@v4
+        
       - name: Install OS deps
         run: |
           sudo apt install g++ -y
-     
-      - name: Clone GuillaumeFalourd/poc-github-actions PUBLIC repository
-        uses: GuillaumeFalourd/clone-github-repo-action@v2.3
-        with:
-          depth: 1
-          branch: 'main'
-          owner: 'rocrisp'
-          repository: 'dh-plugin-workflow-hackery'
 
-      - name: Pull relevant platform
+      - name: Pull backstage platform
         id: pull-platform
         uses: rocrisp/dh-plugin-workflow-hackery/.github/actions/pull-platform@main
         with:
@@ -41,10 +36,10 @@ jobs:
           node-version-file: 'platform/.nvmrc'
           registry-url: 'https://registry.npmjs.org'
           
-    #   - name: Debug
-    #     working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}
-    #     run: |
-    #       cd e2e-tests; yarn install; yarn test
+      - name: Debug
+        working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}
+        run: |
+          cd e2e-tests; ls
           
       - name: Install dependencies
         uses: backstage/actions/yarn-install@b3c1841fd69e1658ac631afafd0fb140a2309024 # v0.6.17
@@ -54,5 +49,5 @@ jobs:
       - name: Install Playwright Browser
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}
         run: |
-          yarn playwright install chromium
+          cd e2e-test; yarn playwright install chromium
           
