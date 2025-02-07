@@ -38,4 +38,4 @@ jobs:
       - name: Install Platform deps
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}
         run: |
-          cd e2e-tests; yarn install
+          cd e2e-tests; ls; yarn install
