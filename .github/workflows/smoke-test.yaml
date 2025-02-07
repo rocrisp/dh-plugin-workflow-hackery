@@ -42,7 +42,7 @@ jobs:
           cd e2e-tests; ls
           
       - name: Change to platform directory
-        run: cd ${{ steps.pull-platform.outputs.platform-content-dir }}
+        run: cd ${{ steps.pull-platform.outputs.platform-content-dir }}/e2e-tests
          
       - name: Install dependencies
         uses: backstage/actions/yarn-install@b3c1841fd69e1658ac631afafd0fb140a2309024 # v0.6.17
@@ -50,7 +50,7 @@ jobs:
           cache-prefix: ${{ runner.os }}-v20
     
       - name: Install Playwright Browser
-        working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}
+        working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/e2e-tests
         run: |
           pwd; ls; yarn playwright install chromium
           
