@@ -44,9 +44,9 @@ jobs:
       - name: Debug
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}
         run: |
-          cd e2e-tests; ls;
+          cd e2e-tests; yarn install; yarn test
           
-      - name: Install dependencies
-        uses: backstage/actions/yarn-install@b3c1841fd69e1658ac631afafd0fb140a2309024 # v0.6.17
-        with:
-          cache-prefix: ${{ runner.os }}-v20
+    #   - name: Install dependencies
+    #     uses: backstage/actions/yarn-install@b3c1841fd69e1658ac631afafd0fb140a2309024 # v0.6.17
+    #     with:
+    #       cache-prefix: ${{ runner.os }}-v20
