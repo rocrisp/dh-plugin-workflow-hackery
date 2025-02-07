@@ -1,4 +1,4 @@
-name: Smoke Test Dynamic Plugin
+name: Dynamic plugin smoke tests
 on: 
   #push:
   workflow_dispatch:
@@ -49,5 +49,5 @@ jobs:
       - name: Install Playwright Browser
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}
         run: |
-          cd e2e-test; yarn playwright install chromium
+          pwd; ls; yarn playwright install chromium
           
