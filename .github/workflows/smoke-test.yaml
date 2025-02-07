@@ -51,7 +51,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd e2e-tests
+          cd platform/e2e-tests
           pwd
           yarn install
     
