@@ -52,6 +52,7 @@ jobs:
           cache-prefix: ${{ runner.os }}-v20
     
       - name: Install Playwright Browser
+        working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}
         run: |
           yarn playwright install chromium
           
