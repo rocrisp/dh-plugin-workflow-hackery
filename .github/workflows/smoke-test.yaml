@@ -52,7 +52,6 @@ jobs:
           cache-prefix: ${{ runner.os }}-v20
     
       - name: Install Playwright Browser
-        uses: backstage/actions/playwright-install@b3c1841fd69e1658ac631afafd0fb140a2309024 # v0.6.17
-        with:
-          browser: chromium
-          cache-prefix: ${{ runner.os }}-v20
+        run: |
+          yarn playwright install chromium
+          
