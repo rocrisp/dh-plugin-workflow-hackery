@@ -27,15 +27,18 @@ jobs:
         with:
           token: ${{ github.token }}
       
-      - name: Set up Node.js Environment
-        uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4
         with:
-          node-version-file: 'platform/.nvmrc'
-          node-version: '18'
-          registry-url: 'https://npm.pkg.github.com'
-          scope: "@rocrisp"
+          node-version-file: '.nvmrc'
+          registry-url: 'https://registry.npmjs.org'
           
       - name: Install Platform deps
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}
         run: |
-          cd e2e-tests; ls; yarn install
+          cd e2e-tests; ls;
+          
+      - name: Install dependencies
+        uses: backstage/actions/yarn-install@b3c1841fd69e1658ac631afafd0fb140a2309024 # v0.6.17
+        with:
+          cache-prefix: ${{ runner.os }}-v20
