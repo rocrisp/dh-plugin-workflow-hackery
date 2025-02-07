@@ -20,7 +20,15 @@ jobs:
       - name: Install OS deps
         run: |
           sudo apt install g++ -y
-          
+     
+      - name: Clone GuillaumeFalourd/poc-github-actions PUBLIC repository
+        uses: GuillaumeFalourd/clone-github-repo-action@v2.3
+        with:
+          depth: 1
+          branch: 'main'
+          owner: 'rocrisp'
+          repository: 'dh-plugin-workflow-hackery'
+
       - name: Pull relevant platform
         id: pull-platform
         uses: rocrisp/dh-plugin-workflow-hackery/.github/actions/pull-platform@main
@@ -33,7 +41,7 @@ jobs:
           node-version-file: '.nvmrc'
           registry-url: 'https://registry.npmjs.org'
           
-      - name: Install Platform deps
+      - name: Debug
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}
         run: |
           cd e2e-tests; ls;
