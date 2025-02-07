@@ -38,5 +38,4 @@ jobs:
       - name: Install Platform deps
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}
         run: |
-          yarn install \
-            --frozen-lockfile
+          cd e2e-tests; yarn install
