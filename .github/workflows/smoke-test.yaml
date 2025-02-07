@@ -48,6 +48,11 @@ jobs:
         uses: backstage/actions/yarn-install@b3c1841fd69e1658ac631afafd0fb140a2309024 # v0.6.17
         with:
           cache-prefix: ${{ runner.os }}-v20
+
+      - name: Install dependencies
+        run: |
+          pwd
+          yarn install
     
       - name: Install Playwright Browser
         working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}/e2e-tests
