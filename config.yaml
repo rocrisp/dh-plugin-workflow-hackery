@@ -1,4 +1,4 @@
 platform:
-  org: janus-idp
-  repo: backstage-plugins
-  ref: ee8cc1dad2f10d698b8fb7e19ef0f9abe3b6c6c7
+  org: redhat-developer
+  repo: rhdh
+  ref: 84d29f7382a825a5ec2da17ad196b33603b6fccb

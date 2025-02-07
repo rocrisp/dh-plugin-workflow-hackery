@@ -1,0 +1,42 @@
+name: Smoke Test Dynamic Plugin
+on: 
+  #push:
+  workflow_dispatch:
+
+env:
+  TEST_PLUGIN_NS: '@solo.io'
+  TEST_PLUGIN_NAME: 'platform-portal-backstage-plugin-backend'
+  TEST_PLUGIN_REPO: 'solo-io/platform-portal-backstage-plugin-backend'
+  TEST_PLUGIN_REPO_REF: '90463fe991ab23ce59b1573f3417e9532292f753'
+  TEST_PLUGIN_LOCAL_DIR:  pluginsrc
+  TEST_PLUGIN_TYPE: backend-plugin
+
+jobs:
+  build-and-publish:
+    name: Build and Publish RHDH Dynamic Plugin
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Install OS deps
+        run: |
+          sudo apt install g++ -y
+          
+      - name: Pull relevant platform
+        id: pull-platform
+        uses: rocrisp/dh-plugin-workflow-hackery/.github/actions/pull-platform@main
+        with:
+          token: ${{ github.token }}
+      
+      - name: Set up Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: 'platform/.nvmrc'
+          node-version: '18'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: "@rocrisp"
+          
+      - name: Install Platform deps
+        working-directory: ${{ steps.pull-platform.outputs.platform-content-dir }}
+        run: |
+          yarn install \
+            --frozen-lockfile
